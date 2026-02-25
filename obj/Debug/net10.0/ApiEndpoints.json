@@ -11,6 +11,22 @@
   },
   {
     "ContainingType": "Hexagonalilty.Api.StudentController",
+    "Method": "PostStudent",
+    "RelativePath": "api/Student",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "student",
+        "Type": "Hexagonality2.Application.Domain.StudentRepository",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hexagonalilty.Api.StudentController",
     "Method": "GetStudent",
     "RelativePath": "id:int",
     "HttpMethod": "GET",

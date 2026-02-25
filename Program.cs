@@ -28,6 +28,7 @@ public class Program
         // Learn more about config
         // uring OpenAPI at https://aka.ms/aspnet/openapi
         b.Services.AddControllers();
+        b.Services.AddOpenApi();
         SubscribeDependencies(b);
     }
 
@@ -39,9 +40,7 @@ public class Program
         // Add services to the container.
         AddToContainer(builder);
 
-        builder.Services.AddControllers();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.Services.AddOpenApi();
 
         app = builder.Build();
 

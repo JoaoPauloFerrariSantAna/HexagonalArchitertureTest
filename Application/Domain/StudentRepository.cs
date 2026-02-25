@@ -15,23 +15,51 @@ public class StudentRepository : IStudentRepository
     public string Email { get; set; } = string.Empty;
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
     public DateTime? DeletedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
     // NOTE: temporary solution
-    private static List<StudentRepository> students;
+    private static List<StudentRepository> students = new List<StudentRepository>();
 
-    public StudentRepository()
+    private StudentRepository SearchForUser(int id)
     {
-        students = new List<StudentRepository>();
+        StudentRepository student = null;
+
+        foreach (var currentStudent in students)
+        {
+            if (currentStudent.Id == id)
+                student = currentStudent;
+        }
+
+        return student;
     }
 
-    public void Create(StudentRepository student)
+    public StudentRepository Create(StudentRepository studentToAdd)
     {
-        throw new NotImplementedException();
+        if (studentToAdd == null)
+            throw new Exception("Student data must be send");
+
+        // student is in db
+        if (this.SearchForUser(studentToAdd.Id) != null) 
+            throw new Exception("User already exists");
+
+        // NOTE: we do not need to keep an reference of `userToAdd`
+        // at least for now, where there is no DTO at the moment
+        students.Add(studentToAdd);
+
+        return studentToAdd;
     }
 
-    public void Delete(int id)
+    public StudentRepository Delete(int id)
     {
-        throw new NotImplementedException();
+        StudentRepository student = this.SearchForUser(id);
+
+        if (student == null)
+            throw new Exception("User not found");
+
+        students.Remove(student);
+        student.DeletedAt = DateTime.UtcNow;
+
+        return student;
     }
 
     public void FindByEmail(string email)
@@ -39,9 +67,22 @@ public class StudentRepository : IStudentRepository
         throw new NotImplementedException();
     }
 
-    public void Update(StudentRepository studentToUpdate)
+    public StudentRepository Update(int id, StudentRepository studentDataToUpdate)
     {
-        throw new NotImplementedException();
+        StudentRepository student = null;
+
+        if (studentDataToUpdate == null)
+            throw new Exception("Student data must be send");
+
+        student = this.SearchForUser(id);
+
+        if (student == null)
+            throw new Exception("Student not found");
+
+        student = studentDataToUpdate;
+        student.UpdatedAt = DateTime.UtcNow;
+
+        return student;
     }
 
     public List<StudentRepository> GetAllStudents()
@@ -51,14 +92,10 @@ public class StudentRepository : IStudentRepository
 
     public StudentRepository GetStudent(int id)
     {
-        StudentRepository student = null;
+        StudentRepository student = this.SearchForUser(id);
 
-        foreach (var currentStudent in students)
-        {
-            if (currentStudent.Id == id) student = currentStudent;
-        }
-
-        if (student == null) throw new Exception("User not found");
+        if (student == null)
+            throw new Exception("User not found");
 
         return student;
     }

@@ -38,4 +38,24 @@ public class StudentController : ControllerBase
 
         return Ok(student);
     }
+
+    [HttpPost()]
+    public IActionResult PostStudent([FromBody] StudentRepository student)
+    {
+        StudentRepository repository = null;
+
+        try
+        {
+            repository = this._repository.Create(student);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+
+        return CreatedAtAction(
+            nameof(PostStudent),
+            new { student.FirstName, student.Email, student.CreatedAt }
+        );
+    }
 }
