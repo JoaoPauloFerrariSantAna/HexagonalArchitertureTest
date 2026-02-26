@@ -33,6 +33,24 @@ public class StudentRepository : IStudentRepository
         return student;
     }
 
+    private StudentRepository UpdateUser(int id, StudentRepository datoToUpdate)
+    {
+        StudentRepository student = null;
+
+        for (int i = 0; i < students.Count; i++)
+        {
+            if (students[i].Id == id)
+            {
+                students[i] = datoToUpdate;
+                students[i].UpdatedAt = DateTime.UtcNow;
+                // because i want to to retun back to the user
+                student = students[i];
+            }
+        }
+
+        return student;
+    }
+
     public StudentRepository Create(StudentRepository studentToAdd)
     {
         if (studentToAdd == null)
@@ -67,20 +85,17 @@ public class StudentRepository : IStudentRepository
         throw new NotImplementedException();
     }
 
-    public StudentRepository Update(int id, StudentRepository studentDataToUpdate)
+    public StudentRepository Update(int id, StudentRepository studentToUpdate)
     {
         StudentRepository student = null;
 
-        if (studentDataToUpdate == null)
+        if (studentToUpdate == null)
             throw new Exception("Student data must be send");
 
-        student = this.SearchForUser(id);
-
-        if (student == null)
+        if(this.SearchForUser(id) == null)
             throw new Exception("Student not found");
 
-        student = studentDataToUpdate;
-        student.UpdatedAt = DateTime.UtcNow;
+        student = this.UpdateUser(id, studentToUpdate);
 
         return student;
     }

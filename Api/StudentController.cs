@@ -39,6 +39,23 @@ public class StudentController : ControllerBase
         return Ok(student);
     }
 
+    [HttpPut("/id:int")]
+    public IActionResult UpdateStudent(int id, [FromBody] StudentRepository studentToUpdate)
+    {
+        StudentRepository student = null;
+
+        try
+        {
+            student = this._repository.Update(id, studentToUpdate);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+
+        return Ok(new { student.FirstName, student.Email, student.UpdatedAt });
+    }
+
     [HttpPost()]
     public IActionResult PostStudent([FromBody] StudentRepository student)
     {
@@ -57,5 +74,22 @@ public class StudentController : ControllerBase
             nameof(PostStudent),
             new { student.FirstName, student.Email, student.CreatedAt }
         );
+    }
+
+    [HttpDelete()]
+    public IActionResult DeleteUser(int id)
+    {
+        StudentRepository student = null;
+
+        try
+        {
+            student = this._repository.Delete(id);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+
+        return Ok(new { student.FirstName, student.DeletedAt });
     }
 }

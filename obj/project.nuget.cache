@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "NodP6HP9lHM=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\jp-gt\\Documents\\Hexagonality2\\Hexagonality2\\Hexagonality2.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jp-gt\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.2\\microsoft.aspnetcore.openapi.10.0.2.nupkg.sha512",
+    "C:\\Users\\jp-gt\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512",
+    "C:\\Users\\jp-gt\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\10.1.4\\swashbuckle.aspnetcore.swaggerui.10.1.4.nupkg.sha512"
+  ],
+  "logs": []
+}
