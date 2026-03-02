@@ -2,7 +2,7 @@
 
 namespace Hexagonality2.Application.Domain.Interfaces;
 
-public interface IStudentRepository
+public interface IDatabaseService
 {
     public StudentEntity Create(StudentEntity toCreate);
     public StudentEntity Update(int id, StudentEntity toUpdate);

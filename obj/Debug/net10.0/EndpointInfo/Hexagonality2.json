@@ -32,17 +32,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StudentRepository"
+                "$ref": "#/components/schemas/StudentEntity"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/StudentRepository"
+                "$ref": "#/components/schemas/StudentEntity"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/StudentRepository"
+                "$ref": "#/components/schemas/StudentEntity"
               }
             }
           },
@@ -126,17 +126,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StudentRepository"
+                "$ref": "#/components/schemas/StudentEntity"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/StudentRepository"
+                "$ref": "#/components/schemas/StudentEntity"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/StudentRepository"
+                "$ref": "#/components/schemas/StudentEntity"
               }
             }
           },
@@ -148,11 +148,32 @@
           }
         }
       }
+    },
+    "/email:string": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "StudentRepository": {
+      "StudentEntity": {
         "required": [
           "firstName"
         ],

@@ -18,8 +18,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "student",
-        "Type": "Hexagonality2.Application.Domain.StudentRepository",
+        "Name": "studentToCreate",
+        "Type": "Hexagonality2.Application.Domain.Entities.StudentEntity",
         "IsRequired": true
       }
     ],
@@ -27,7 +27,7 @@
   },
   {
     "ContainingType": "Hexagonalilty.Api.StudentController",
-    "Method": "DeleteUser",
+    "Method": "DeleteStudent",
     "RelativePath": "api/Student",
     "HttpMethod": "DELETE",
     "IsController": true,
@@ -43,7 +43,23 @@
   },
   {
     "ContainingType": "Hexagonalilty.Api.StudentController",
-    "Method": "GetStudent",
+    "Method": "GetStudentByEmail",
+    "RelativePath": "email:string",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Hexagonalilty.Api.StudentController",
+    "Method": "GetStudentById",
     "RelativePath": "id:int",
     "HttpMethod": "GET",
     "IsController": true,
@@ -72,7 +88,7 @@
       },
       {
         "Name": "studentToUpdate",
-        "Type": "Hexagonality2.Application.Domain.StudentRepository",
+        "Type": "Hexagonality2.Application.Domain.Entities.StudentEntity",
         "IsRequired": true
       }
     ],

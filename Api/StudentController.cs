@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Hexagonality2.Application.Domain.Interfaces;
 using Hexagonality2.Application.Domain;
+using Hexagonality2.Application.Domain.Entities;
 
 namespace Hexagonalilty.Api;
 
@@ -8,88 +9,54 @@ namespace Hexagonalilty.Api;
 [Route("/api/[controller]")]
 public class StudentController : ControllerBase
 {
-    // TODO: change later to IStudentService
-    private readonly IStudentRepository _repository;
+    private readonly IStudentService  _service;
 
-    public StudentController(IStudentRepository repository)
+    public StudentController(IStudentService service)
     {
-        this._repository = repository;
+        this._service = service;
     }
 
     [HttpGet()]
     public IActionResult GetAllUsers()
     {
-        return Ok(this._repository.GetAllStudents());
+        return Ok(this._service.GetAllStudents());
     }
 
     [HttpGet("/id:int")]
-    public IActionResult GetStudent(int id)
+    public IActionResult GetStudentById(int id)
     {
-        StudentRepository student = null;
+        StudentDto student = null;
 
-        try
-        {
-            student = this._repository.GetStudent(id);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
+        try { student = this._service.GetStudent(id); }
+        catch (Exception e) { return BadRequest(e.Message); };
+        return Ok(student);
+    }
 
+    [HttpGet("/email:string")]
+    public IActionResult GetStudentByEmail(string email)
+    {
+        StudentDto student = this._service.FindByEmail(email);
         return Ok(student);
     }
 
     [HttpPut("/id:int")]
-    public IActionResult UpdateStudent(int id, [FromBody] StudentRepository studentToUpdate)
+    public IActionResult UpdateStudent(int id, [FromBody] StudentEntity studentToUpdate)
     {
-        StudentRepository student = null;
-
-        try
-        {
-            student = this._repository.Update(id, studentToUpdate);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-
-        return Ok(new { student.FirstName, student.Email, student.UpdatedAt });
+        StudentDto student = this._service.Update(id, studentToUpdate);
+        return Ok(student);
     }
 
     [HttpPost()]
-    public IActionResult PostStudent([FromBody] StudentRepository student)
+    public IActionResult PostStudent([FromBody] StudentEntity studentToCreate)
     {
-        StudentRepository repository = null;
-
-        try
-        {
-            repository = this._repository.Create(student);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-
-        return CreatedAtAction(
-            nameof(PostStudent),
-            new { student.FirstName, student.Email, student.CreatedAt }
-        );
+        StudentDto student = this._service.Create(studentToCreate);
+        return CreatedAtAction(nameof(PostStudent), student);
     }
 
     [HttpDelete()]
-    public IActionResult DeleteUser(int id)
+    public IActionResult DeleteStudent(int id)
     {
-        StudentRepository student = null;
-
-        try
-        {
-            student = this._repository.Delete(id);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-
-        return Ok(new { student.FirstName, student.DeletedAt });
+        StudentDto student = this._service.Delete(id);
+        return Ok(student);
     }
 }

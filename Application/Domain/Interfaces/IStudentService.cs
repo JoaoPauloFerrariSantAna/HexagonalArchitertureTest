@@ -1,9 +1,13 @@
-﻿namespace Hexagonality2.Application.Domain.Interfaces;
+﻿using Hexagonality2.Application.Domain.Entities;
+
+namespace Hexagonality2.Application.Domain.Interfaces;
 
 public interface IStudentService
 {
-    public void Create(StudentRepository student);
-    public void Update(StudentRepository studentToUpdate);
-    public void Delete(int id);
-    public void FindByEmail(string email);
+    public StudentDto Create(StudentEntity student);
+    public StudentDto Update(int id, StudentEntity studentToUpdate);
+    public StudentDto Delete(int id);
+    public StudentDto FindByEmail(string email);
+    public StudentDto GetStudent(int id);
+    public List<StudentDto> GetAllStudents();
 }
