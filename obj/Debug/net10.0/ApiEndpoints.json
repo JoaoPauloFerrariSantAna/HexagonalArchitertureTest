@@ -18,8 +18,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "studentToCreate",
-        "Type": "Hexagonality2.Application.Domain.Entities.StudentEntity",
+        "Name": "toCreate",
+        "Type": "Hexagonality2.Domain.Entities.StudentEntity",
         "IsRequired": true
       }
     ],
@@ -87,8 +87,8 @@
         "IsRequired": false
       },
       {
-        "Name": "studentToUpdate",
-        "Type": "Hexagonality2.Application.Domain.Entities.StudentEntity",
+        "Name": "toUpdate",
+        "Type": "Hexagonality2.Domain.Entities.StudentEntity",
         "IsRequired": true
       }
     ],

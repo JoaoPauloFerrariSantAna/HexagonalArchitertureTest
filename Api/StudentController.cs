@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Hexagonality2.Application.Domain.Interfaces;
-using Hexagonality2.Application.Domain;
-using Hexagonality2.Application.Domain.Entities;
+using Hexagonality2.Domain;
+using Hexagonality2.Domain.Entities;
+using Hexagonality2.Domain.Interfaces;
 
 namespace Hexagonalilty.Api;
 
@@ -25,38 +25,66 @@ public class StudentController : ControllerBase
     [HttpGet("/id:int")]
     public IActionResult GetStudentById(int id)
     {
-        StudentDto student = null;
+        StudentDto s = null;
 
-        try { student = this._service.GetStudent(id); }
-        catch (Exception e) { return BadRequest(e.Message); };
-        return Ok(student);
+        try
+        {
+            s = this._service.GetStudent(id);
+        } catch (Exception e) { return BadRequest(e.InnerException); }
+
+        return Ok(s);
     }
 
     [HttpGet("/email:string")]
     public IActionResult GetStudentByEmail(string email)
     {
-        StudentDto student = this._service.FindByEmail(email);
-        return Ok(student);
+        StudentDto s = null;
+
+        try
+        {
+            s = this._service.FindByEmail(email);
+        }
+        catch (Exception e) { return BadRequest(e.InnerException); }
+
+        return Ok(s);
     }
 
     [HttpPut("/id:int")]
-    public IActionResult UpdateStudent(int id, [FromBody] StudentEntity studentToUpdate)
+    public IActionResult UpdateStudent(int id, [FromBody] StudentEntity toUpdate)
     {
-        StudentDto student = this._service.Update(id, studentToUpdate);
-        return Ok(student);
+        StudentDto s = null;
+
+        try
+        {
+            s = this._service.Update(id, toUpdate);
+        } catch (Exception e) { return BadRequest(e.InnerException); }
+
+        return Ok(s);
     }
 
     [HttpPost()]
-    public IActionResult PostStudent([FromBody] StudentEntity studentToCreate)
+    public IActionResult PostStudent([FromBody] StudentEntity toCreate)
     {
-        StudentDto student = this._service.Create(studentToCreate);
-        return CreatedAtAction(nameof(PostStudent), student);
+        StudentDto s = this._service.Create(toCreate);
+
+        try
+        {
+            s = this._service.Create(toCreate);
+        } catch (Exception e) { return BadRequest(e.InnerException); }
+
+        return CreatedAtAction(nameof(PostStudent), s);
     }
 
     [HttpDelete()]
     public IActionResult DeleteStudent(int id)
     {
-        StudentDto student = this._service.Delete(id);
-        return Ok(student);
+        StudentDto s = null;
+
+        try
+        {
+            s = this._service.Delete(id);
+        } catch (Exception e) { return BadRequest(e.InnerException); }
+
+        return Ok(s);
     }
 }

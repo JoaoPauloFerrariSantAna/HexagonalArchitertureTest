@@ -1,6 +1,7 @@
-using Hexagonality2.Application.Domain.Interfaces;
 using Hexagonality2.Application;
-using Hexagonality2.Infrastructure;
+using Hexagonality2.Application.Services;
+using Hexagonality2.Domain.Interfaces;
+using Hexagonality2.Infrastructure.Repositories;
 
 namespace Hexagonality2;
 
@@ -23,8 +24,6 @@ public class Program
     {
         b.Services.AddScoped<IStudentRepository, StudentRepository>();
         b.Services.AddScoped<IStudentService, StudentService>();
-        b.Services.AddScoped<IDatabaseRepository, DatabaseRepository>();
-        b.Services.AddScoped<IDatabaseService, DatabaseService>();
     }
 
     private static void AddToContainer(WebApplicationBuilder b)
