@@ -1,4 +1,3 @@
-using Hexagonality2.Application;
 using Hexagonality2.Application.Services;
 using Hexagonality2.Domain.Interfaces;
 using Hexagonality2.Infrastructure.Repositories;
@@ -42,8 +41,6 @@ public class Program
 
         // Add services to the container.
         AddToContainer(builder);
-
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
         app = builder.Build();
 

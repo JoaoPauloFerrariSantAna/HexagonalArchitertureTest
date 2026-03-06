@@ -27,10 +27,8 @@ public class StudentController : ControllerBase
     {
         StudentDto s = null;
 
-        try
-        {
-            s = this._service.GetStudent(id);
-        } catch (Exception e) { return BadRequest(e.InnerException); }
+        try { s = this._service.GetStudent(id); }
+        catch (Exception e) { return BadRequest(e.Message); }
 
         return Ok(s);
     }
@@ -40,11 +38,8 @@ public class StudentController : ControllerBase
     {
         StudentDto s = null;
 
-        try
-        {
-            s = this._service.FindByEmail(email);
-        }
-        catch (Exception e) { return BadRequest(e.InnerException); }
+        try { s = this._service.FindByEmail(email); }
+        catch (Exception e) { return BadRequest(e.Message); }
 
         return Ok(s);
     }
@@ -54,10 +49,8 @@ public class StudentController : ControllerBase
     {
         StudentDto s = null;
 
-        try
-        {
-            s = this._service.Update(id, toUpdate);
-        } catch (Exception e) { return BadRequest(e.InnerException); }
+        try { s = this._service.Update(id, toUpdate); }
+        catch (Exception e) { return BadRequest(e.Message); }
 
         return Ok(s);
     }
@@ -65,13 +58,11 @@ public class StudentController : ControllerBase
     [HttpPost()]
     public IActionResult PostStudent([FromBody] StudentEntity toCreate)
     {
-        StudentDto s = this._service.Create(toCreate);
+        StudentDto s = null;
 
-        try
-        {
-            s = this._service.Create(toCreate);
-        } catch (Exception e) { return BadRequest(e.InnerException); }
-
+        try { s = this._service.Create(toCreate); }
+        catch (Exception e) { return BadRequest(e.Message); }
+        
         return CreatedAtAction(nameof(PostStudent), s);
     }
 
@@ -80,10 +71,8 @@ public class StudentController : ControllerBase
     {
         StudentDto s = null;
 
-        try
-        {
-            s = this._service.Delete(id);
-        } catch (Exception e) { return BadRequest(e.InnerException); }
+        try { s = this._service.Delete(id); }
+        catch (Exception e) { return BadRequest(e.Message); }
 
         return Ok(s);
     }

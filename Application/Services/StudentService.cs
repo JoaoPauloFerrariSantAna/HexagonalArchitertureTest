@@ -69,6 +69,9 @@ public class StudentService : IStudentService
         };
     }
 
+    // different of seaching with the Id: this function is for the user
+    // the id one is internal and only is not private 'cause it will give
+    // an error if it turns to private
     public StudentDto FindByEmail(string email)
     {
         StudentEntity s = null;
@@ -76,8 +79,11 @@ public class StudentService : IStudentService
         try {
             s = _repository.FindByEmail(email);
 
+            if (!IsEmailValid(email))
+                throw new Exception("Email must be valid!");
+
             if (s == null)
-                throw new Exception("Student not found");
+               throw new Exception("Student not found");
         }
         catch(Exception e) { throw new Exception(e.Message); }
 
@@ -92,17 +98,17 @@ public class StudentService : IStudentService
 
     public List<StudentDto> GetAllStudents()
     {
-        List<StudentEntity> entities = _repository.GetAllStudents();
+        List<StudentEntity> sts = _repository.GetAllStudents();
         List<StudentDto> dtos = new List<StudentDto>();
 
-        for (int i = 0; i < entities.Count; i++)
+        foreach (var st in sts)
         {
             dtos.Add(new StudentDto
             {
-                FirstName = entities[i].FirstName,
-                Email = entities[i].Email,
-                CreatedAt = entities[i].CreatedAt,
-                UpdatedAt = entities[i].UpdatedAt,
+                FirstName = st.FirstName,
+                Email = st.Email,
+                CreatedAt = st.CreatedAt,
+                UpdatedAt = st.UpdatedAt,
             });
         }
 
@@ -134,7 +140,8 @@ public class StudentService : IStudentService
     {
         StudentEntity s = null;
 
-        try {
+        try
+        {
             if (!IsInDatabase(id))
                 throw new Exception("a valid id must be given");
 
